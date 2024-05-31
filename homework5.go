@@ -4,18 +4,14 @@ import (
 	"fmt"
 )
 
-// чи можна виковистовувати методи для мапів окремо, не вкладаючи їх в структуру?
 func main() {
-
 	var week1 Schedule
 	week1.initMap()
 	//week1.printMap()
-
 	fmt.Printf("To find daily schedule, please, input day of the week: ")
 	var findDaySchedule string
 	fmt.Scan(&findDaySchedule)
 	week1.Search(findDaySchedule)
-
 }
 
 type Schedule struct {
