@@ -29,4 +29,5 @@ func (s Index) Search(indexText map[string][]int) {
 	} else {
 		fmt.Printf("No such key exists. Try again.\n")
 	}
+	return
 }

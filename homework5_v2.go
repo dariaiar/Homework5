@@ -9,9 +9,8 @@ import (
 
 func main() {
 	text := getTextFromFile()
-	indexText := index.NewIndex(text)
-	res := index.Search(indexText)
-	fmt.Println(res)
+	indexText := index.Index{}.NewIndex(text)
+	index.Index{}.Search(indexText)
 }
 
 func getTextFromFile() []string {
