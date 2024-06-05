@@ -11,9 +11,7 @@ func main() {
 	text := getTextFromFile()
 	indexText := index.NewIndex(text)
 	res := index.Search(indexText)
-
 	fmt.Println(res)
-
 }
 
 func getTextFromFile() []string {
@@ -32,6 +30,5 @@ func getTextFromFile() []string {
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading from file:", err)
 	}
-
 	return text
 }

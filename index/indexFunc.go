@@ -14,7 +14,6 @@ func (s Index) NewIndex(text []string) map[string][]int {
 		for _, word := range words {
 			word = strings.ToLower(word)
 			indexText[word] = append(indexText[word], i)
-
 		}
 	}
 	return indexText
