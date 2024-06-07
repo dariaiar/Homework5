@@ -1,33 +1,50 @@
 package index
 
 import (
-	"fmt"
 	"strings"
 )
 
-type Index struct{}
+type Index struct {
+	index map[string][]int
+	text  []string
+}
 
-func (s Index) NewIndex(text []string) map[string][]int {
-	indexText := make(map[string][]int)
+func New(text []string) *Index {
+	idx := &Index{
+		index: make(map[string][]int),
+		text:  text,
+	}
 	for i, line := range text {
 		words := strings.Fields(line)
 		for _, word := range words {
 			word = strings.ToLower(word)
-			indexText[word] = append(indexText[word], i)
+			idx.index[word] = append(idx.index[word], i)
 		}
 	}
-	return indexText
+	return idx
 }
 
-func (s Index) Search(indexText map[string][]int) {
-	var inputSearchKey string
-	fmt.Println("Input word to search")
-	fmt.Scan(&inputSearchKey)
-	inputSearchKey = strings.ToLower(inputSearchKey)
-	if val, ok := indexText[inputSearchKey]; ok {
-		fmt.Printf("The word '%v' exists in lines# %v\n", inputSearchKey, val)
-	} else {
-		fmt.Printf("No such key exists. Try again.\n")
+type SearchResult struct {
+	SearchWord  string
+	LineNumbers []int
+}
+
+func (i *Index) Search(word string) SearchResult {
+	//var inputSearchKey string
+	//fmt.Println("Input word to search")
+	//fmt.Scan(&inputSearchKey)
+	//inputSearchKey = strings.ToLower(inputSearchKey)
+	word = strings.ToLower(word)
+	if val, ok := i.index[word]; ok {
+		//fmt.Printf("The word '%v' exists in lines# %v\n", word, val)
+		return SearchResult{
+			SearchWord:  word,
+			LineNumbers: val,
+		}
 	}
-	return
+	return SearchResult{
+		SearchWord:  word,
+		LineNumbers: []int{},
+	}
+
 }

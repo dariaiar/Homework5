@@ -8,9 +8,14 @@ import (
 )
 
 func main() {
-	text := getTextFromFile()
-	indexText := index.Index{}.NewIndex(text)
-	index.Index{}.Search(indexText)
+	text := chooseTextOrigin()
+	index := index.New(text)
+	var word string
+	fmt.Println("Enter a word to search:")
+	fmt.Scan(&word)
+	SearchResult := index.Search(word)
+	fmt.Printf("Search results for '%v': %v\n", SearchResult.SearchWord, SearchResult.LineNumbers)
+
 }
 
 func getTextFromFile() []string {
@@ -30,4 +35,49 @@ func getTextFromFile() []string {
 		fmt.Println("Error reading from file:", err)
 	}
 	return text
+}
+
+func getTextFromTerminal() []string {
+	fmt.Printf("How manu lines are you going to input?  ")
+	var number int
+	fmt.Scan(&number)
+	fmt.Scanln()
+	text := make([]string, number)
+	scanner := bufio.NewScanner(os.Stdin)
+	for i := 0; i < number; i++ {
+		fmt.Printf("Input line #%v  -  ", i)
+		if scanner.Scan() {
+			text[i] = scanner.Text()
+		} else {
+			if err := scanner.Err(); err != nil {
+				fmt.Println("Error reading input:", err)
+			}
+		}
+	}
+	return text
+}
+
+func chooseTextOrigin() []string {
+	fmt.Println("Input 1 or 2 if you want to get text from: '1' - file; '2' - terminal")
+	var textOrigin int
+	fmt.Scan(&textOrigin)
+	var text []string
+	var finish bool
+	for !finish {
+		switch textOrigin {
+		case 1:
+			text = getTextFromFile()
+			finish = true
+		case 2:
+			text = getTextFromTerminal()
+			finish = true
+		default:
+			fmt.Println("Invalid choice. Please choose a valid number.")
+			fmt.Scan(&textOrigin)
+
+		}
+
+	}
+	return text
+
 }
