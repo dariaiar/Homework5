@@ -13,9 +13,8 @@ func main() {
 	var word string
 	fmt.Println("Enter a word to search:")
 	fmt.Scan(&word)
-	SearchResult := index.Search(word)
-	fmt.Printf("Search results for '%v': %v\n", SearchResult.SearchWord, SearchResult.LineNumbers)
-
+	searchResult := index.Search(word)
+	fmt.Printf("Search results for '%v': %v\n", searchResult.SearchWord, searchResult.LineNumbers)
 }
 
 func getTextFromFile() []string {
@@ -74,10 +73,7 @@ func chooseTextOrigin() []string {
 		default:
 			fmt.Println("Invalid choice. Please choose a valid number.")
 			fmt.Scan(&textOrigin)
-
 		}
-
 	}
 	return text
-
 }
